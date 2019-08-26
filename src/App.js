@@ -49,14 +49,15 @@ class App extends Component {
     } else {
       this.setState({
         isDisplayForm: !this.state.isDisplayForm,
-        //taskEditing: null
+        //
+        taskEditing: null
       });
     }
   }
 
   //ra cha nhận lại 
   onSubmit = (task) => {
-    //console.log(task) ;
+    
     var { data } = this.state;
     if (task.id === '') {
       data.push(task);
