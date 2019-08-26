@@ -3,6 +3,8 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 
+import randomstring from 'randomstring';
+import Control from './components/Control';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,9 +36,14 @@ class App extends Component {
         }
       ],
       isDisplayForm: false,
-      taskEditing: null
+      taskEditing: null,
+      //tạo filter :Search 
+      filter: {
+        name: '',
+        level: -1,
+      },
+      keyword: '',
     };
-
   }
 
   // show Form 
@@ -49,67 +56,42 @@ class App extends Component {
     } else {
       this.setState({
         isDisplayForm: !this.state.isDisplayForm,
-        //
-        taskEditing: null
       });
     }
   }
 
-  //ra cha nhận lại 
+  //ra App component cha nhận lại 
   onSubmit = (task) => {
-    
+    //console.log(task);
+    //khi goi task thi can lay task de lam newItem
     var { data } = this.state;
     if (task.id === '') {
-      data.push(task);
+      var newItem = {
+        id: randomstring.generate(),
+        name: task.name,
+        email: task.email,
+        level: task.level,
+
+      }
+      data.push(newItem);
     } else {
       var index = this.findIndex(this.state.data, task.id);
       data[index] = task;
-
     }
-
-
     this.setState({
       data: data,
       taskEditing: null
     });
   }
-  // close Form 
-  // onCloseForm = () => {
-  //   this.setState ({
-  //     isDisplayForm : false 
-  //   });
-  // }
 
+  //close Form 
+  onCloseForm = () => {
+    this.setState({
+      isDisplayForm: false
+    });
+  }
 
-  //    //delete
-  //   // 1. func tim vi tri cua item
-  //   findIndex = (id) => {
-  //     var {tasks} = this.state ;
-
-  //     tasks.forEach((tasks, index) => {
-  //       if (this.state.data.id === id) {
-  //         return index ; 
-  //       }
-  //     })
-  //     return -1 ;
-
-  //   }
-  //   // 2. xóa Item
-  //  onDelete = (id) => {
-  //     if (window.confirm('Are you sure you want to delete this item?')) {
-  //       var {tasks} = this.state ;
-  //       var index = this.findIndex( id);
-  //       if (index !== -1 ){
-  //         tasks.splice (index , 1);
-  //         this.setState({
-  //           tasks : tasks 
-  //         });
-  //       }
-  //     }
-  //   }
-
-
-  //delete
+  // delete
   // 1. func tim vi tri cua item
   findIndex = (data, id) => {
     var index = -1;
@@ -137,54 +119,68 @@ class App extends Component {
     }
   }
 
-
-  //edit
-
+  //Edit
   onEdit = (item) => {
     //console.log(id) ;
     var { data } = this.state;
     var index = this.findIndex(this.state.data, item.id);
     var taskEditing = data[index];
-
     this.setState({
       taskEditing: taskEditing
     });
     this.onToggleForm();
-
     //console.log(this.state.taskEditing)
+  }
 
+  // Seaech 
+  // khi đẩy từ serach.js đẩy ra app :
+  onSearch = (keyword) => {
+    //console.log(keyword);
+    this.setState({
+      keyword: keyword
+    })
   }
 
   render() {
     //use es6 
-    var { isDisplayForm, taskEditing } = this.state;
+    var { isDisplayForm, taskEditing, keyword, filter, data } = this.state;
+    // nếu true ->TaskForm
     var elmTaskForm = isDisplayForm ? <TaskForm
       onSubmit={this.onSubmit}
       task={taskEditing}
+      cancelForm={this.onCloseForm}
     /> : '';
+
+    //filter theo name kiem tra chứa keywwork .
+    if (keyword) {
+      data = data.filter((task) => {
+        return task.name.toLowerCase().indexOf(keyword) !== -1;
+      });
+      console.log(data);
+    }
     return (
       <div className="container">
         <div className=" col-lg-12  border-bottom p-3 row">
           <h1>Project 01 - ToDo List <small>ReactJS</small></h1>
         </div>
         <div class="row col-lg-12 pt-3">
-          <div class="col-lg-9 ml-auto ">
-            Task Control
-          {/* button search , sort .... */}
+          <div class=" row col-lg-9 ml-auto ">
+            {/* Task Control */}
+            <Control
+              //nhan func ->tao ra onSearch on App.js
+              onSearch={this.onSearch} />
           </div>
           <div class="col-lg-3 ml-auto">
             <button type="button" className="btn btn-info btn-block " onClick={this.onToggleForm}  >
-              {(this.state.isDisplayForm) ? 'Close Item' : 'Add Item'}
-
+              {/* {(this.state.isDisplayForm ) ? 'Close Item' : 'Add Item'} */}
+              Add Item
             </button>
           </div>
         </div>
         <TaskList
-          data={this.state.data}
+          data={data}
           onEdit={this.onEdit}
           onDelete={this.onDelete}
-
-
         />
         <div className="row">
           {/* <TaskForm
