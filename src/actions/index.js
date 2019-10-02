@@ -1,4 +1,4 @@
-import * as types from './../contans/ActionTypes';
+import * as types from '../contans/actionTypes';
 //import sort from '../reducers/sort';
 
 // all list 
@@ -21,26 +21,6 @@ export const listFail = error => {
   };
 };
 
-//add 
-export const AddTaskRequest = (task) => {
-  return {
-    type: types.ADD_TASK,
-    task
-  };
-};
-export const AddTaskSuccess = (data) => {
-  return {
-    type: types.ADD_TASK_SUCCESS,
-    data
-  };
-};
-export const AddTaskFail = (error) => {
-  return {
-    type: types.ADD_TASK_FAILURE,
-    error
-  }
-}
-
 //toggleForm
 export const toggleForm = () => {
   return {
@@ -62,60 +42,80 @@ export const closeForm = () => {
   }
 }
 
-//delete 
-export const DeleteTaskRequest = id => {
+//add task 
+export const addTaskRequest = (task) => {
+  return {
+    type: types.ADD_TASK,
+    task
+  };
+};
+export const addTaskSuccess = (data) => {
+  return {
+    type: types.ADD_TASK_SUCCESS,
+    data
+  };
+};
+export const addTaskFail = (error) => {
+  return {
+    type: types.ADD_TASK_FAILURE,
+    error
+  }
+}
+
+//delete task
+export const deleteTaskRequest = id => {
   return {
     type: types.DELETE_TASK,
     id
   };
 };
-export const DeleteTaskSuccess = id => {
+export const deleteTaskSuccess = id => {
   return {
     type: types.DELETE_TASK_SUCCESS,
     id
   };
 };
-export const DeleteTaskFail = error => {
+export const deleteTaskFail = error => {
   return {
     type: types.DELETE_TASK_FAILURE,
     error
   };
 };
 
-// task editing 
-export const TaskEditingRequest = (task) => {
+// set task editing 
+export const setEditingRequest = (task) => {
   return {
-    type: types.TAKS_EDITING,
+    type: types.SET_EDITING,
     task
   };
 };
-export const TaskEditingSuccess = (task) => {
+export const setEditingSuccess = (task) => {
   return {
-    type: types.TAKS_EDITING_SUCCESS,
+    type: types.SET_EDITING_SUCCESS,
     task
   };
 };
-export const TaskEditingFail = (error) => {
+export const setEditingFail = (error) => {
   return {
-    type: types.TAKS_EDITING_FAILURE,
+    type: types.SET_EDITING_FAILURE,
     error
   };
 };
 
 // edit task
-export const UpdateTaskRequest = task => {
+export const updateTaskRequest = task => {
   return {
     type: types.UPDATE_TASK,
     task
   };
 };
-export const UpdateTaskSuccess = task => {
+export const updateTaskSuccess = task => {
   return {
     type: types.UPDATE_TASK_SUCCESS,
     task
   };
 };
-export const UpdateTaskFail = error => {
+export const updateTaskFail = error => {
   return {
     type: types.UPDATE_TASK_FAILURE,
     error
@@ -123,38 +123,38 @@ export const UpdateTaskFail = error => {
 };
 
 // search 
-export const SearchTask = (keyword) => {
+export const searchTask = (keyword) => {
   return {
     type: types.SEARCH_TASK,
     keyword: keyword
   }
 }
-export const SearchSuccess = (keyword) => {
+export const searchSuccess = (keyword) => {
   return {
     type: types.SEARCH_SUCCESS,
     keyword: keyword
   }
 }
-export const SearchFail = () => {
+export const searchFail = () => {
   return {
     type: types.SEARCH_FAILURE,
   }
 }
 
 //sort 
-export const SortTask = (sort) => {
+export const sortTask = (sort) => {
   return {
     type: types.SORT_TASK,
     sort: sort,
   }
 }
-export const SortTastSuccess = (sort) => {
+export const sortTastSuccess = (sort) => {
   return {
     type: types.SEARCH_SUCCESS,
     sort: sort,
   }
 }
-export const SorrTaskFail = (sort) => {
+export const sortTaskFail = (sort) => {
   return {
     type: types.SEARCH_FAILURE,
     error: 'err'

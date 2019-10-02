@@ -9,14 +9,14 @@ import {
     //cancel
 } from "redux-saga/effects";
 
-import * as types from "./../contans/ActionTypes";
+import * as types from "./../contans/actionTypes";
 //import * as actions from "./../actions/index";
 //import dataItem from '../dataItem';
 //import tasks from "../reducers/tasks";
 import { api } from './api';
 
 function* fetchTodoList() {
-    // use "redux - saga"
+    //  use "redux - saga"
     // try {
     //     // const data = yield 
     //     //console.log(dataItem);
@@ -29,13 +29,17 @@ function* fetchTodoList() {
     //         type: types.LIST_FAILURE,
     //         err
     //     });
-    // }
+    //  }
+
+    //use API
     try {
         const response = yield api.fetchTodoList();
+        console.log(response);
         const data = response.data;
+        console.log(response.data);
         yield put({
             type: types.LIST_SUCCESS,
-            data
+            data 
         });
     } catch (err) {
         yield put({
@@ -43,30 +47,10 @@ function* fetchTodoList() {
             err
         });
     }
-
-
 }
 
-
-function* DeleteTask(action) {
-    try {
-        //console.log(action);
-        const { id } = action;
-        const response = yield api.deleteTaskAPI(id);
-        yield put({
-            type: types.DELETE_TASK_SUCCESS,
-            id: response.data.id
-        });
-    } catch (err) {
-        yield put({
-            type: types.DELETE_TASK_FAILURE,
-            err
-        });
-    }
-}
-
-function* AddTask(action) {
-    // use "redux - saga"
+function* addTask(action) {
+    //// use "redux - saga"
     // if (action) {
     //     console.log(action);
     //     const { task } = action;
@@ -89,22 +73,57 @@ function* AddTask(action) {
     try {
         const { task } = action;
         const response = yield (api.addNewTaskAPI(task));
-
+        console.log(response);
+        
         yield put({
             type: types.ADD_TASK_SUCCESS,
             data: response.data
         });
-        console.log(response.data);
-
     } catch (error) {
         yield put({
             type: types.ADD_TASK_FAILURE,
             error
         });
     }
-
 }
-function* EditingTask(action) {
+
+function* deleteTask(action) {
+
+    // try {
+    //     const { id } = action;
+    //     console.log(action);
+
+    //     const response = yield api.deleteTaskAPI(id);
+    //     console.log(response);
+    //     yield put({
+    //         type: types.DELETE_TASK_SUCCESS,
+    //         id: response.data.id
+    //     });
+    // } catch (err) {
+    //     yield put({
+    //         type: types.DELETE_TASK_FAILURE,
+    //         err
+    //     });
+    // }
+    try {
+        const { id } = action;
+        console.log(action);
+
+        yield api.deleteTaskAPI(id);
+        
+        yield put({
+            type: types.DELETE_TASK_SUCCESS,
+            id
+        });
+    } catch (err) {
+        yield put({
+            type: types.DELETE_TASK_FAILURE,
+            err
+        });
+    }
+}
+
+function* setEditingTask(action) {
     //console.log(action);
     // use "redux - saga"
     // const { task } = action
@@ -125,19 +144,19 @@ function* EditingTask(action) {
     const { task } = action
     if (action) {
         yield put({
-            type: types.TAKS_EDITING_SUCCESS,
+            type: types.SET_EDITING_SUCCESS,
             //task: action.task
             task
 
         });
     } else {
         yield put({
-            type: types.TAKS_EDITING_FAILURE,
+            type: types.SET_EDITING_FAILURE,
             error: 'err'
         });
     }
 }
-function* UpdateTask(action) {
+function* updateTask(action) {
     //console.log(action);
     // use "redux - saga"
     // if (action) {
@@ -157,6 +176,8 @@ function* UpdateTask(action) {
     try {
         const { task } = action;
         const response = yield (api.updateTaskAPI(task));
+        //console.log(response)
+        //console.log(action);
         yield put({
             type: types.UPDATE_TASK_SUCCESS,
             task: response.data
@@ -168,7 +189,7 @@ function* UpdateTask(action) {
         });
     }
 }
-function* SearchTask(action) {
+function* searchTask(action) {
     const { keyword } = action;
     if (action) {
         yield put({
@@ -182,7 +203,7 @@ function* SearchTask(action) {
         });
     }
 }
-function* SortTask(action) {
+function* sortTask(action) {
     const { sort } = action;
     if (action) {
         yield put({
@@ -202,23 +223,23 @@ function* watchFectTodoList() {
     //console.log('watching todolist');
     yield takeLatest(types.LIST_REQUEST, fetchTodoList);
 }
-function* watchDeleteTask() {
-    yield takeLatest(types.DELETE_TASK, DeleteTask);
-}
 function* watchAddTask() {
-    yield takeLatest(types.ADD_TASK, AddTask);
+    yield takeLatest(types.ADD_TASK, addTask);
+}
+function* watchDeleteTask() {
+    yield takeLatest(types.DELETE_TASK, deleteTask);
 }
 function* watchEditingTask() {
-    yield takeLatest(types.TAKS_EDITING, EditingTask)
+    yield takeLatest(types.SET_EDITING, setEditingTask)
 }
 function* watchUpdateTask() {
-    yield takeLatest(types.UPDATE_TASK, UpdateTask)
+    yield takeLatest(types.UPDATE_TASK, updateTask)
 }
 function* watchSearchTask() {
-    yield takeLatest(types.SEARCH_TASK, SearchTask)
+    yield takeLatest(types.SEARCH_TASK, searchTask)
 }
 function* watchSortTask() {
-    yield takeLatest(types.SORT_TASK, SortTask)
+    yield takeLatest(types.SORT_TASK, sortTask)
 }
 function* rootSaga() {
     yield fork(watchFectTodoList);

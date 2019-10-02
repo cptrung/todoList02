@@ -31,6 +31,7 @@ class TaskForm extends Component {
         }
     }
     componentWillReceiveProps(nextProps) {
+        // console.log(nextProps)
         if (nextProps && nextProps.itemEditing) {
             this.setState({
                 id: nextProps.itemEditing.id,
@@ -40,36 +41,49 @@ class TaskForm extends Component {
             })
         }
     }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     console.log('123', nextProps, nextState);
+    //     return true;
+    // }
+    // componentWillUpdate(nextProps, nextState) {
+    //     console.log('456', nextProps, nextState);
 
+    // }
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log('789', prevProps, prevState);
+    // }
+    // componentWillUnmount() {
+    //     console.log("componentWillUnmount");
+       
+    //   }
 
-    //viết func:  a =()=>{} k cần đăng ký lại 
+    //viết func:  a =()=>{} k cần đăng ký  
     //mặt định formik trong on submit fai có trường field 
     //field trả về giá trị nếu add sẽ thay đổi giá dc 
     onSubmit = (field) => {
-      
+        //console.log(field);
         //truyền state ra ngoài cha
         //this.props.onSubmit(field);
         // onAddTask : đã đc props ở dưới cùng hàm mapdispatch
-        if(field.id === ''){
-        this.props.onAddTask(field);
-        //console.log(field);
-        //khai báo trong app là cancelForm = this.closeFrom .. 
-        this.props.onCloseForm(); }
+        if (field.id === '') {
+            this.props.onAddTask(field);
+            //console.log(field);
+            //khai báo trong app là cancelForm = this.closeFrom .. 
+            this.props.onCloseForm();
+        }
         else {
             this.props.UpdateTaskRequest(field);
             this.props.onCloseForm();
-
         }
     }
     render() {
         //console.log(this.props.itemEditing);
-        //var { id } = this.state;
         if (!this.props.isDisplayForm) return '';
         return (
             <Formik
                 // có thể thay đổi : 
                 enableReinitialize
-                initialValues={this.state}
+                initialValues={this.state}   //feil  lấy giá trị ban đàu sate
                 validationSchema={Yup.object().shape({
                     name: Yup
                         .string()
@@ -145,26 +159,26 @@ class TaskForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        isDisplayForm: state.isDisplayForm,
+    return { //note
+        isDisplayForm: state.data.isDisplayForm,
         task: state.task,
         //check có dữ liệu hay k : console.log(this.props.itemEditing); 
-        itemEditing: state.itemEditing,
+        itemEditing: state.data.itemEditing,
     }
 };
 const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddTask: (task) => {
             //addTask la cua index.js /actions
-            dispatch(actions.AddTaskRequest(task))
+            dispatch(actions.addTaskRequest(task))
         },
         onCloseForm: () => {
             dispatch(actions.closeForm())
         },
-        UpdateTaskRequest : (task) => {
-            dispatch(actions.UpdateTaskRequest(task));
+        UpdateTaskRequest: (task) => {
+            dispatch(actions.updateTaskRequest(task));
         }
-        
+
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

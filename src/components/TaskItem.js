@@ -10,7 +10,7 @@ class TaskItem extends Component {
 
     }
     onDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this item?')) {
+        if (window.confirm('Are you sure you want to delete this item?')) { //eslint-disable-line
             this.props.onDeleteTask(id);
         }
     }
@@ -49,14 +49,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         onDeleteTask: (id) => {
-            dispatch(actions.DeleteTaskRequest(id)); 
+            dispatch(actions.deleteTaskRequest(id)); 
             // goi trong action / index.js
         },
         onOpenForm: () => {
             dispatch(actions.openForm());
         },
         onEditTask: (task) => {
-         dispatch(actions.TaskEditingRequest(task));
+         dispatch(actions.setEditingRequest(task));
         }
     }
 };

@@ -9,31 +9,45 @@ class TaskList extends Component {
         super(props);
         this.state = {}
     }
-    componentDidMount = () => {
+    componentDidMount() {
+
         this.props.ListRequest();
     }
     render() {
-        var { data, keyword, sort } = this.props;
-        // console.log(sort);
-        // console.log(data);
+        //console.log('abc');
+        var { keyword, sort, tasks } = this.props;
+        //console.log(sort);
+        //console.log(this.props.data);
+
         //search 
         //console.log(this.props.keyword);
         //filter theo name kiem tra chứa keyword.
         if (keyword) {
-            data = data.filter((task) => {
-                return task.name.toLowerCase().indexOf(keyword) !== -1;
+            tasks = tasks.filter((task) => {
+                return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
             });
-            // console.log(data);
+            // console.log(data); keywork có ép kiểu
         }
+
         //sort 
-        data = orderBy(data, [sort.by], [sort.orderDir]);
+        //tasks :Returns the new sorted array(dữ liêu) 
+        tasks = orderBy(tasks, [sort.by], [sort.orderDir]);
         // data = orderBy(data ,
         //     (i)=> {
         //         return i.name 
         //     }, ['desc'] 
         //     );
         //  console.log(data) ;
-        //console.log(this.props.todos); 
+        //console.log(this.props.todos);
+
+
+        var element = tasks.map((item, index) => {
+            return <TaskItem
+                key={index}
+                item={item}
+                index={index}
+            />
+        })
 
         return (
             <div className="container-fluid">
@@ -55,13 +69,7 @@ class TaskList extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((item, index) => {
-                                            return <TaskItem
-                                                key={index}
-                                                item={item}
-                                                index={index}
-                                            />
-                                        })}
+                                        {element}
                                     </tbody>
                                 </table>
                             </div>
@@ -78,9 +86,9 @@ const mapStateToProps = (state) => {
     return {
         //data : lúc khi render() , khai báo {data} =this.props . 
         // state.tasks : tasks fai truyền từ index.js của reducer 
-        data: state.tasks,
-        keyword: state.search, // bên search // lấy từ trên store 
-        sort: state.sort,  //bên sort , đã lấy dc store 
+        tasks: state.data.tasks,
+        keyword: state.data.search, // bên search // lấy từ trên store 
+        sort: state.data.sort,  //bên sort , đã lấy dc store 
     }
 };
 //dispatch list request

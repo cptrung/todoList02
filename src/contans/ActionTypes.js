@@ -17,12 +17,12 @@ export const DELETE_TASK = "DELETE_TASK";
 export const DELETE_TASK_SUCCESS = "DELETE_TASK_SUCCESS";
 export const DELETE_TASK_FAILURE = "DELETE_TASK_FAILURE";
 
-// task editting
-export const TAKS_EDITING = "TAKS_EDITING";
-export const TAKS_EDITING_SUCCESS = "TAKS_EDITING_SUCCESS";
-export const TAKS_EDITING_FAILURE = "TAKS_EDITING_FAILURE";
+// set value for item editting
+export const SET_EDITING = "SET_EDITING";
+export const SET_EDITING_SUCCESS = "SET_EDITING_SUCCESS";
+export const SET_EDITING_FAILURE = "SET_EDITING_FAILURE";
 
-// edit task
+// edit task of tasks
 
 export const UPDATE_TASK = "UPDATE_TASK";
 export const UPDATE_TASK_SUCCESS = "UPDATE_TASK_SUCCESS";

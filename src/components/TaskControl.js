@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Search from './Search';
-import Sort from './Sort';
+import Search from './TaskSearch';
+import TaskSort from './TaskSort';
 
 class Control extends Component {
     render() {
@@ -10,7 +10,7 @@ class Control extends Component {
                     <Search />
                 </div>
                 <div className=" col-lg-5 ">
-                    <Sort />
+                    <TaskSort />
                 </div>
             </div>
         );

@@ -1,14 +1,15 @@
 import axios from 'axios' ;
-const url = "http://5d7b46f3bc283e0014c2dc0c.mockapi.io/api/todolist" ;
+//const url = "http://5d7b46f3bc283e0014c2dc0c.mockapi.io/api/todolist" ;
+const url = "http://localhost:3000/todolist" ;
 
 function fetchTodoList(){
     return axios ({
         method : "GET" ,
-        url ,
+        url 
     })
 }
 
-//add task 
+//add task  
 // use data : newTask 
 function addNewTaskAPI(newTask) {
     return axios({
@@ -16,7 +17,7 @@ function addNewTaskAPI(newTask) {
         url,
         data:newTask
     });
-}
+} 
 
 //delete task 
 function deleteTaskAPI(param) {
