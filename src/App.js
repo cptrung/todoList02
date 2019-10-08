@@ -24,8 +24,9 @@ class App extends Component {
     } else {
       this.props.onToggleForm();
     }
+    //gán lại từ đầu thuộc tính 
     this.props.onClearTask({
-      id: '',
+      _id: '',
       name: '',
       email: '',
       level: 'medium'

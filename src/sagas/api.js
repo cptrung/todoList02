@@ -1,11 +1,12 @@
-import axios from 'axios' ;
+import axios from 'axios';
 //const url = "http://5d7b46f3bc283e0014c2dc0c.mockapi.io/api/todolist" ;
-const url = "http://localhost:3000/todolist" ;
+//const url = "http://localhost:3000/todolist" ;
+const url = "http://localhost:3000/task";
 
-function fetchTodoList(){
-    return axios ({
-        method : "GET" ,
-        url 
+function fetchTodoList() {
+    return axios({
+        method: "GET",
+        url
     })
 }
 
@@ -15,30 +16,30 @@ function addNewTaskAPI(newTask) {
     return axios({
         method: "POST",
         url,
-        data:newTask
+        data: newTask
     });
-} 
+}
 
 //delete task 
 function deleteTaskAPI(param) {
-    return axios ({
-        method : "DELETE",
-        url: `${url}/${param}` ,
-        data :null ,
+    return axios({
+        method: "DELETE",
+        url: `${url}/${param}`,
+        data: null,
     })
 }
 
 //update task 
-function updateTaskAPI(task){
-    return axios ({
-        method : "PUT",
-        url :`${url}/${task.id}`,
-        data :task
+function updateTaskAPI(task) {
+    return axios({
+        method: "PUT",
+        url: `${url}/${task._id}`,
+        data: task
     });
 }
 
 export const api = {
-    fetchTodoList ,
+    fetchTodoList,
     deleteTaskAPI,
     addNewTaskAPI,
     updateTaskAPI,

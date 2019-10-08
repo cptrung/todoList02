@@ -13,7 +13,7 @@ var initialState = {
     },
     isDisplayForm: false,
     itemEditing: {
-        id: '',
+        _id: '',
         name: '',
         email: '',
         level: 'medium',
@@ -24,7 +24,7 @@ var initialState = {
 var findIndex = (data, id) => {
     var index = -1;
     data.forEach((item, i) => {
-        if (item.id === id) {
+        if (item._id === id) {
             index = i;
         }
     })
@@ -60,8 +60,9 @@ var data = (state = initialState, action) => {
             // newTask.id = randomstring.generate();
             //state.tasks.push(newTask);
             // return { ...state, tasks: [...state.tasks, newTask] };
-            //console.log(action.data);
-
+            console.log("abc");
+            console.log(action.data);
+            
             state.tasks = [...state.tasks, action.data];
             return { ...state };
         case types.ADD_TASK_FAILURE:
@@ -73,11 +74,11 @@ var data = (state = initialState, action) => {
         case types.UPDATE_TASK_SUCCESS:
             //console.log(action.task.id);
             //c1
-            var index = findIndex(state.tasks, action.task.id);
+            var index = findIndex(state.tasks, action.task._id);
             //c2
             // var index = _.findIndex(state.tasks,
             //     task => {
-            //         return task.id === action.task.id;
+            //         return task._id === action.task._id;
             //     });
 
             // c1 . use mãng tĩnh chưa có id  
@@ -116,8 +117,8 @@ var data = (state = initialState, action) => {
         case types.DELETE_TASK_SUCCESS:
             console.log(state.tasks);
 
-            let id = action.id;
-            console.log(action.id);
+            let id = action._id;
+            console.log(action._id);
             // //note findIndex(state ) --> findIndex(state.tasks )
             index = findIndex(state.tasks, id);
             console.log(index);
@@ -185,8 +186,7 @@ var data = (state = initialState, action) => {
         case types.SEARCH_TASK:
             return { ...state };
         case types.SEARCH_SUCCESS:
-
-            console.log(action);
+            // console.log(action);
             return {
                 ...state, search: action.keyword
             };

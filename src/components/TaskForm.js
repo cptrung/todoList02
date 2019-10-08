@@ -9,7 +9,7 @@ class TaskForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
+            _id: '',
             name: '',
             email: '',
             level: 'medium',
@@ -21,9 +21,9 @@ class TaskForm extends Component {
     }
     //gắn vào edit 
     componentWillMount() {
-        if (this.props.itemEditing && this.props.itemEditing.id != null) {
+        if (this.props.itemEditing && this.props.itemEditing._id != null) {
             this.setState({
-                id: this.props.itemEditing.id,
+                _id: this.props.itemEditing._id,
                 name: this.props.itemEditing.name,
                 email: this.props.itemEditing.email,
                 level: this.props.itemEditing.level
@@ -34,7 +34,7 @@ class TaskForm extends Component {
         // console.log(nextProps)
         if (nextProps && nextProps.itemEditing) {
             this.setState({
-                id: nextProps.itemEditing.id,
+                _id: nextProps.itemEditing._id,
                 name: nextProps.itemEditing.name,
                 email: nextProps.itemEditing.email,
                 level: nextProps.itemEditing.level
@@ -61,13 +61,12 @@ class TaskForm extends Component {
     //mặt định formik trong on submit fai có trường field 
     //field trả về giá trị nếu add sẽ thay đổi giá dc 
     onSubmit = (field) => {
-        //console.log(field);
+        console.log(field._id);
         //truyền state ra ngoài cha
         //this.props.onSubmit(field);
         // onAddTask : đã đc props ở dưới cùng hàm mapdispatch
-        if (field.id === '') {
+        if (field._id === '') {
             this.props.onAddTask(field);
-            //console.log(field);
             //khai báo trong app là cancelForm = this.closeFrom .. 
             this.props.onCloseForm();
         }

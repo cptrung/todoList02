@@ -9,9 +9,9 @@ class TaskItem extends Component {
         };
 
     }
-    onDelete = (id) => {
+    onDelete = (task) => {
         if (window.confirm('Are you sure you want to delete this item?')) { //eslint-disable-line
-            this.props.onDeleteTask(id);
+            this.props.onDeleteTask(task._id);
         }
     }
     onEdit = (task) => {
@@ -35,7 +35,7 @@ class TaskItem extends Component {
                 <td colSpan="2">
                     <button type="button" className="btn btn-warning btn-sm mr-2" onClick={() => this.onEdit(item)} >Edit</button>
                     {/* item  trả về 1 mảng araray luôn  , bị lập ra mảng luôn  , còn cần trỏ tới item.id */}
-                    <button type="button" className="btn btn-danger btn-sm" onClick={() => this.onDelete(item.id)} >Delete</button>
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => this.onDelete(item)} >Delete</button>
                 </td>
             </tr>
         );
@@ -48,8 +48,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onDeleteTask: (id) => {
-            dispatch(actions.deleteTaskRequest(id)); 
+        onDeleteTask: (_id) => {
+            dispatch(actions.deleteTaskRequest(_id)); 
             // goi trong action / index.js
         },
         onOpenForm: () => {

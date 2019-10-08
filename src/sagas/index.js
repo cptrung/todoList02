@@ -39,7 +39,7 @@ function* fetchTodoList() {
         console.log(response.data);
         yield put({
             type: types.LIST_SUCCESS,
-            data 
+            data
         });
     } catch (err) {
         yield put({
@@ -70,14 +70,33 @@ function* addTask(action) {
     // }
 
     //use API
+    // try {
+    //     const { task } = action;
+    //     console.log(action);
+    //     const response = yield (api.addNewTaskAPI(task));
+    //     console.log(response);
+    //     yield put({
+    //         type: types.ADD_TASK_SUCCESS,
+    //         data: response.data
+
+    //     });
+    // } catch (error) {
+    //     yield put({
+    //         type: types.ADD_TASK_FAILURE,
+    //         error
+    //     });
+    // }
+
     try {
         const { task } = action;
-        const response = yield (api.addNewTaskAPI(task));
+        console.log(task);
+        const newTask = { name: task.name, email: task.email, level: task.level };
+        const response = yield (api.addNewTaskAPI(newTask));
         console.log(response);
-        
         yield put({
             type: types.ADD_TASK_SUCCESS,
             data: response.data
+
         });
     } catch (error) {
         yield put({
@@ -85,6 +104,7 @@ function* addTask(action) {
             error
         });
     }
+
 }
 
 function* deleteTask(action) {
@@ -106,14 +126,14 @@ function* deleteTask(action) {
     //     });
     // }
     try {
-        const { id } = action;
+        const { _id } = action;
         console.log(action);
 
-        yield api.deleteTaskAPI(id);
-        
+        yield api.deleteTaskAPI(_id);
+
         yield put({
             type: types.DELETE_TASK_SUCCESS,
-            id
+            _id: action._id
         });
     } catch (err) {
         yield put({
@@ -175,12 +195,13 @@ function* updateTask(action) {
     //use API
     try {
         const { task } = action;
-        const response = yield (api.updateTaskAPI(task));
-        //console.log(response)
-        //console.log(action);
+        // const response = yield (api.updateTaskAPI(task));
+        yield (api.updateTaskAPI(task));
+        // console.log(response)
+        console.log(action);
         yield put({
             type: types.UPDATE_TASK_SUCCESS,
-            task: response.data
+            task: action.task
         });
     } catch (error) {
         yield put({

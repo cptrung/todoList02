@@ -63,16 +63,16 @@ export const addTaskFail = (error) => {
 }
 
 //delete task
-export const deleteTaskRequest = id => {
+export const deleteTaskRequest = _id => {
   return {
     type: types.DELETE_TASK,
-    id
+    _id
   };
 };
-export const deleteTaskSuccess = id => {
+export const deleteTaskSuccess = _id => {
   return {
     type: types.DELETE_TASK_SUCCESS,
-    id
+    _id
   };
 };
 export const deleteTaskFail = error => {
@@ -154,9 +154,9 @@ export const sortTastSuccess = (sort) => {
     sort: sort,
   }
 }
-export const sortTaskFail = (sort) => {
+export const sortTaskFail = (error) => {
   return {
     type: types.SEARCH_FAILURE,
-    error: 'err'
+    error
   }
 }
